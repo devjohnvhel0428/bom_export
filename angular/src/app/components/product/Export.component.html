@@ -15,9 +15,9 @@
                         (click)="selectProduct(product, i)">
                         <td class="text-center">{{product.id}}</td>
                         <td class="d-none d-md-table-cell text-center"><a *ngIf="product.image"
-                                href="http://localhost:5000/uploads/products/{{product.image}}" target="_blank"
+                                href="http://localhost:27017/uploads/products/{{product.image}}" target="_blank"
                                 title="{{product.image}}"><img class="img-list"
-                                    src="http://localhost:5000/uploads/products/{{product.image}}" /></a></td>
+                                    src="http://localhost:27017/uploads/products/{{product.image}}" /></a></td>
                         <td>{{product.name}}</td>
                         <td style="text-align: center;">
                             <span *ngIf="selectedProduct?.id!=product.id">{{product.qty}}</span>

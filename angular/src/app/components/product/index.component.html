@@ -72,9 +72,9 @@
                                 [checked]="product.selected"></td>
                             <td class="text-center" (click)="goToBom(product.order_id)">{{product.id}}</td>
                             <!-- <td class="d-none d-md-table-cell text-center"><a *ngIf="product.image"
-                                    href="http://localhost:5000/uploads/products/{{product.image}}" target="_blank"
+                                    href="http://localhost:27017/uploads/products/{{product.image}}" target="_blank"
                                     title="{{product.image}}"><img class="img-list"
-                                        src="http://localhost:5000/uploads/products/{{product.image}}" /></a></td> -->
+                                        src="http://localhost:27017/uploads/products/{{product.image}}" /></a></td> -->
                             <td (click)="goToBom(product.order_id)">{{product.name}}</td>
                             <td class="d-none d-md-table-cell" (click)="goToBom(product.order_id)">{{formatDate(product.create_date, 'YYYY-MM-DD')}}</td>
                             <td class="d-none d-md-table-cell" (click)="goToBom(product.order_id)">{{formatDate(product.edit_date, 'YYYY-MM-DD')}}</td>
