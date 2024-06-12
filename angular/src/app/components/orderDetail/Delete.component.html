@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Delete Accessory of BOM</h3>
+            <form ngNativeValidate method="post" (submit)="this.delete()">
+                <div class="row">
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_id">Id</label>
+                        <input readonly id="order_detail_id" name="id" class="form-control form-control-sm"
+                            value="{{orderDetail.id}}" type="number" required />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_order_id">Bom Id</label>
+                        <input readonly id="order_detail_order_id" name="order_id" class="form-control form-control-sm"
+                            value="{{orderDetail.order_id}}" type="number" required />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_part_number">Part NO</label>
+                        <input readonly id="order_detail_part_number" name="part_number" class="form-control form-control-sm"
+                            [(ngModel)]="orderDetail.part_number" required />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_designators ">Designators</label>
+                        <input readonly id="order_detail_designators" name="designators" class="form-control form-control-sm"
+                            value="{{orderDetail.designators}}" required />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="footprint">Accessory</label>
+                        <input readonly id="footprint" name="footprint" class="form-control form-control-sm"
+                            value="{{orderDetail.footprint}}" maxlength="50" />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_qty">Qty</label>
+                        <input readonly id="order_detail_qty" name="qty" class="form-control form-control-sm"
+                            value="{{orderDetail.qty}}" type="number" required />
+                    </div>
+                    <div class="col-12">
+                        <a class="btn btn-sm btn-secondary" (click)="util.goBack('/bomDetail', $event)"
+                            routerLink="/bomDetail">Cancel</a>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Add Accessory</h3>
+            <form ngNativeValidate method="post" (submit)="create()">
+                <div class="row">
+                    <div class="form-group col-md-6 col-lg-4">
+                        <!-- <input hidden id="order_detail_id" name="id" class="form-control form-control-sm"
+                            [(ngModel)]="orderDetail.id" type="number" required /> -->
+                        <label for="order_detail_order_id">BOM Id</label>
+                        <input id="order_detail_order_id" name="order_id" class="form-control form-control-sm"
+                            [(ngModel)]="orderDetail.order_id" type="number" required />
+                        <span *ngIf="errors.order_id" class="text-danger">{{errors.order_id}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_part_number">Part NO</label>
+                        <input id="order_detail_part_number" name="part_number" class="form-control form-control-sm"
+                            [(ngModel)]="orderDetail.part_number" required />
+                        <span *ngIf="errors.part_number" class="text-danger">{{errors.part_number}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_designators">Designators(Ex: C1,C2,C3)</label>
+                        <input id="order_detail_designators" name="designators" class="form-control form-control-sm"
+                            [(ngModel)]="orderDetail.designators" required />
+                        <span *ngIf="errors.designators" class="text-danger">{{errors.designators}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_accessory_id">Accessory(Manufacturer)</label>
+                        <select id="order_detail_accessory_id" name="accessory_id" class="form-control form-control-sm"
+                            [(ngModel)]="orderDetail.accessory_id" required>
+                            <option *ngFor="let accessory of accessories" value="{{accessory.id}}"
+                                [selected]="orderDetail.accessory_id == accessory.id">{{accessory.footprint}}({{accessory.manufacturer}})</option>
+                        </select>
+                        <span *ngIf="errors.accessory_id" class="text-danger">{{errors.accessory_id}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_qty">Qty</label>
+                        <input id="order_detail_qty" name="qty" class="form-control form-control-sm text-right"
+                            [(ngModel)]="orderDetail.qty" type="number" min="1" max="1000" required />
+                        <span *ngIf="errors.qty" class="text-danger">{{errors.qty}}</span>
+                    </div>
+                    <div class="col-12">
+                        <a class="btn btn-sm btn-secondary" (click)="util.goBack('/bomDetail', $event)"
+                            routerLink="/bomDetail">Cancel</a>
+                        <button class="btn btn-sm btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

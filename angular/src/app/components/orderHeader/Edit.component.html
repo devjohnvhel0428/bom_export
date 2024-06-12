@@ -1,0 +1,91 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>BOM Edit - {{orderHeader.product_name}}</h3>
+            <form ngNativeValidate method="post" (submit)="edit()">
+                <div class="row">
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_header_id">Id</label>
+                        <input readonly id="order_header_id" name="id" class="form-control form-control-sm"
+                            [(ngModel)]="orderHeader.id" type="number" required />
+                        <span *ngIf="errors.id" class="text-danger">{{errors.id}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_header_product_id">Product</label>
+                        <select id="order_header_product_id" name="product_id" class="form-control form-control-sm"
+                            [(ngModel)]="orderHeader.product_id" required disabled>
+                            <option *ngFor="let product of products" value="{{product.id}}"
+                                [selected]="orderHeader.product_id == product.id">{{product.name}}</option>
+                        </select>
+                        <span *ngIf="errors.product_id" class="text-danger">{{errors.product_id}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_header_n_f">Part Number</label>
+                        <input id="order_header_n_f" name="n_f" class="form-control form-control-sm"
+                            [(ngModel)]="orderHeader.n_f" autocomplete="off" required disabled />
+                        <span *ngIf="errors.n_f" class="text-danger">{{errors.order_header_n_f}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_header_order_date">Create Date</label>
+                        <input id="order_header_order_date" name="order_date" class="form-control form-control-sm"
+                            [(ngModel)]="orderHeader.order_date" data-type="date" autocomplete="off" required
+                            disabled />
+                        <span *ngIf="errors.order_date" class="text-danger">{{errors.order_date}}</span>
+                    </div>
+                    <div class="col-12">
+                        <table class="table table-sm table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Part NO</th>
+                                    <th>Designators</th>
+                                    <th>Qty</th>
+                                    <th>Value</th>
+                                    <th>Footprint</th>
+                                    <th>Data</th>
+                                    <th>Manufacturer</th>
+                                    <th>Information</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let orderHeaderOrderDetail of orderHeaderOrderDetails">
+                                    <td class="text-center">{{orderHeaderOrderDetail.id}}</td>
+                                    <td>{{orderHeaderOrderDetail.part_number}}</td>
+                                    <td>{{orderHeaderOrderDetail.designators}}</td>
+                                    <td class="text-left">{{orderHeaderOrderDetail.qty}}</td>
+                                    <td class="text-center">{{orderHeaderOrderDetail.value}}</td>
+                                    <td>{{orderHeaderOrderDetail.footprint}}</td>
+                                    <td class="text-center">{{orderHeaderOrderDetail.data}}</td>
+                                    <td class="text-center">{{orderHeaderOrderDetail.manufacturer}}</td>
+                                    <td>{{orderHeaderOrderDetail.info}}</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-sm btn-primary"
+                                            routerLink="/bomDetail/edit/{{orderHeaderOrderDetail.id}}" title="Edit"><i
+                                                class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-sm btn-danger"
+                                            routerLink="/bomDetail/delete/{{orderHeaderOrderDetail.id}}"
+                                            title="Delete"><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a class="btn btn-sm btn-primary" (click)="util.goto($event)"
+                            href="/bomDetail/create?order_detail_order_id={{orderHeader.id}}">Add</a>
+                        <!-- Hidden file input to handle file uploads -->
+                        <input type="file" #fileInput name="excel" name="excel" style="display: none" (change)="onExcelImport($event)" />
+                        <!-- Bootstrap button to trigger the hidden file input -->
+                        <button type="button" class="btn btn-sm btn-danger" (click)="fileInput.click()">
+                            Import Excel
+                        </button>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <a class="btn btn-sm btn-secondary" (click)="util.goBack('/product', $event)"
+                            routerLink="/product">Cancel</a>
+                        <button class="btn btn-sm btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

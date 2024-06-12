@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>BOM Detail - {{orderHeader.product_name}}</h3>
+            <form ngNativeValidate method="post">
+                <div class="row">
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_header_id">Id</label>
+                        <input readonly id="order_header_id" name="id" class="form-control form-control-sm"
+                            value="{{orderHeader.id}}" type="number" required />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="product_name">Product</label>
+                        <input readonly id="product_name" name="product_name" class="form-control form-control-sm"
+                            value="{{orderHeader.product_name}}" maxlength="50" />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_header_order_date">Order Date</label>
+                        <input readonly id="order_header_order_date" name="order_date"
+                            class="form-control form-control-sm" value="{{orderHeader.order_date}}" data-type="date"
+                            autocomplete="off" required />
+                    </div>
+                    <div class="col-12">
+                        <table class="table table-sm table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Part Number</th>
+                                    <th>Designators</th>
+                                    <th>Qty</th>
+                                    <th>Value</th>
+                                    <th>Footprint</th>
+                                    <th>Data</th>
+                                    <th>Manufacturer</th>
+                                    <th>Information</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let orderHeaderOrderDetail of orderHeaderOrderDetails">
+                                    <td class="text-center">{{orderHeaderOrderDetail.id}}</td>
+                                    <td class="text-center">{{orderHeaderOrderDetail.part_number}}</td>
+                                    <td>{{orderHeaderOrderDetail.designators}}</td>
+                                    <td class="text-left">{{orderHeaderOrderDetail.qty}}</td>
+                                    <td class="text-center">{{orderHeaderOrderDetail.value}}</td>
+                                    <td>{{orderHeaderOrderDetail.footprint}}</td>
+                                    <td class="text-center">{{orderHeaderOrderDetail.data}}</td>
+                                    <td class="text-center">{{orderHeaderOrderDetail.manufacturer}}</td>
+                                    <td>{{orderHeaderOrderDetail.info}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12">
+                        <a class="btn btn-sm btn-secondary" (click)="util.goBack('/bomHeader', $event)"
+                            routerLink="/bomHeader">Back</a>
+                        <a class="btn btn-sm btn-primary" [queryParams]="{ ref: util.getRef('/bomHeader') }"
+                            routerLink="/bomHeader/edit/{{orderHeader.id}}">Edit</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

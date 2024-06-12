@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Product Edit - {{product.name}}</h3>
+            <form ngNativeValidate method="post" (submit)="edit()" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="product_id">Id</label>
+                        <input readonly id="product_id" name="id" class="form-control form-control-sm"
+                            [(ngModel)]="product.id" type="number" required />
+                        <span *ngIf="errors.id" class="text-danger">{{errors.id}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="product_name">Name</label>
+                        <input id="product_name" name="name" class="form-control form-control-sm"
+                            [(ngModel)]="product.name" required maxlength="50" />
+                        <span *ngIf="errors.name" class="text-danger">{{errors.name}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="product_n_f">Part NO</label>
+                        <input id="product_n_f" name="price" class="form-control form-control-sm"
+                            [(ngModel)]="product.n_f" type="number" step="0.1" required />
+                        <span *ngIf="errors.n_f" class="text-danger">{{errors.n_f}}</span>
+                    </div>
+                    <!-- <div class="form-group col-md-6 col-lg-4">
+                        <label for="product_image">Image</label>
+                        <input type="file" accept="image/*" id="product_image" name="image"
+                            class="form-control form-control-sm" maxlength="50" />
+                        <a href="http://localhost:5000/uploads/products/{{product.image}}" target="_blank"
+                            title="{{product.image}}"><img class="img-item"
+                                src="http://localhost:5000/uploads/products/{{product.image}}" /></a>
+                        <span *ngIf="errors.image" class="text-danger">{{errors.image}}</span>
+                    </div> -->
+                    <div class="col-12">
+                        <a class="btn btn-sm btn-secondary" (click)="util.goBack('/product', $event)"
+                            routerLink="/product">Cancel</a>
+                        <button class="btn btn-sm btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

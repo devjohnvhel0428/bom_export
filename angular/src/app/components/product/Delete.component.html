@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Product Delete - {{product.name}}</h3>
+            <form ngNativeValidate method="post" (submit)="this.delete()">
+                <div class="row">
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="product_id">Id</label>
+                        <input readonly id="product_id" name="id" class="form-control form-control-sm"
+                            value="{{product.id}}" type="number" required />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="product_name">Name</label>
+                        <input readonly id="product_name" name="name" class="form-control form-control-sm"
+                            value="{{product.name}}" required maxlength="50" />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="product_n_f">Part NO</label>
+                        <input readonly id="product_n_f" name="n_f" class="form-control form-control-sm"
+                            value="{{product.n_f}}" type="number" step="0.1" required />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="user_account_name">Create User</label>
+                        <input readonly id="user_account_name" name="user_account_name"
+                            class="form-control form-control-sm" value="{{product.user_account_name}}" maxlength="50" />
+                    </div>
+                    <!-- <div class="form-group col-md-6 col-lg-4"><label>Image</label>
+                        <div><a href="http://localhost:5000/uploads/products/{{product.image}}" target="_blank"
+                                title="{{product.image}}"><img class="img-item"
+                                    src="http://localhost:5000/uploads/products/{{product.image}}" /></a></div>
+                    </div> -->
+                    <div class="col-12">
+                        <a class="btn btn-sm btn-secondary" (click)="util.goBack('/product', $event)"
+                            routerLink="/product">Cancel</a>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

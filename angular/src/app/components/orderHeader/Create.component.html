@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Create New BOM</h3>
+            <form ngNativeValidate method="post" (submit)="create()">
+                <div class="row">
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_header_product_id">Product</label>
+                        <select id="order_header_product_id" name="product_id" class="form-control form-control-sm"
+                            [(ngModel)]="orderHeader.product_id" required>
+                            <option *ngFor="let product of products" value="{{product.id}}"
+                                [selected]="orderHeader.order_header_product_id == product.id">{{product.name}}</option>
+                        </select>
+                        <span *ngIf="errors.order_header_product_id" class="text-danger">{{errors.product_id}}</span>
+                    </div>
+                    <div class="col-12">
+                        <a class="btn btn-sm btn-secondary" (click)="util.goBack('/orderHeader', $event)"
+                            routerLink="/orderHeader">Cancel</a>
+                        <button class="btn btn-sm btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

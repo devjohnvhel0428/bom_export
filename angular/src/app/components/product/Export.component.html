@@ -1,0 +1,76 @@
+<div class="container">
+    <div class="row">
+        <div [ngClass]="{'col-md-12': !selectedProduct, 'col-md-5': selectedProduct}">
+            <table class="table table-sm table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Id</th>
+                        <th style="text-align: center;">Image</th>
+                        <th style="text-align: center;">Name of product</th>
+                        <th style="text-align: center;">Qty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products; let i = index" style="cursor: pointer;"
+                        (click)="selectProduct(product, i)">
+                        <td class="text-center">{{product.id}}</td>
+                        <td class="d-none d-md-table-cell text-center"><a *ngIf="product.image"
+                                href="http://localhost:5000/uploads/products/{{product.image}}" target="_blank"
+                                title="{{product.image}}"><img class="img-list"
+                                    src="http://localhost:5000/uploads/products/{{product.image}}" /></a></td>
+                        <td>{{product.name}}</td>
+                        <td style="text-align: center;">
+                            <span *ngIf="selectedProduct?.id!=product.id">{{product.qty}}</span>
+                            <input type="number" min="1" class="text-center" *ngIf="selectedProduct?.id==product.id"
+                                value="{{product.qty}}" style="width: 50px;" (change)="changeQty(i, $event)" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a class="btn btn-sm btn-secondary" (click)="util.goBack('/product', $event)"
+                routerLink="/product">Cancel</a>
+            <button type="button" class="btn btn-sm btn-primary btn-success" (click)="export()">
+                <i class="fa fa-file-excel-o"></i>
+                Export
+            </button>
+        </div>
+        <div *ngIf="selectedProduct" class="col-md-7 border-left">
+            <table class="table table-sm table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Designators</th>
+                        <th>Qty</th>
+                        <th>Value</th>
+                        <th>Footprint</th>
+                        <th>Data</th>
+                        <th>Manufacturer</th>
+                        <th>Information</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let detail of selectedDetail; let i = index" (dblclick)="selectDetail(i, detail)">
+                        <td class="text-center">{{detail.accessory_id}}</td>
+                        <td>{{detail.designators}}</td>
+                        <td class="text-left">{{detail.qty}}</td>
+                        <td class="text-center">{{detail.value}}</td>
+                        <td>{{detail.footprint}}</td>
+                        <td class="text-center">{{detail.data}}</td>
+                        <td class="text-center">
+                            <span
+                                *ngIf="detail.accessory_id!=selectedAccessory?.accessory_id">{{detail.manufacturer}}</span>
+                            <select *ngIf="detail.accessory_id==selectedAccessory?.accessory_id"
+                                (change)="changeAccessory(i, $event)">
+                                <option *ngFor="let item of detail.similar;let number = index" value="{{number}}"
+                                    [selected]="item.id == detail.accessory_id">{{item.manufacturer}}</option>
+                            </select>
+                        </td>
+                        <td>{{detail.info}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-sm btn-dark" (click)="cancelDetail()">Cancel</button>
+            <button type="button" class="btn btn-sm btn-success" (click)="confirmDetail()">Confirm</button>
+        </div>
+    </div>
+</div>

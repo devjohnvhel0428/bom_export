@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Create New Accessory</h3>
+            <form ngNativeValidate method="post" (submit)="create()">
+                <div class="row">
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="accessory_footprint">Footprint</label>
+                        <input id="accessory_footprint" name="footprint" class="form-control form-control-sm" [(ngModel)]="accessory.footprint"
+                            required maxlength="50" />
+                        <span *ngIf="errors.footprint" class="text-danger">{{errors.footprint}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="accessory_value">Value</label>
+                        <input id="accessory_value" name="value" class="form-control form-control-sm" [(ngModel)]="accessory.value"
+                            required maxlength="50" />
+                        <span *ngIf="errors.value" class="text-danger">{{errors.value}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="accessory_data">Data</label>
+                        <input id="accessory_data" name="data" class="form-control form-control-sm" [(ngModel)]="accessory.data"
+                            required maxlength="50" />
+                        <span *ngIf="errors.data" class="text-danger">{{errors.data}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="accessory_manufacturer">Manufacturer</label>
+                        <input id="accessory_manufacturer" name="manufacturer" class="form-control form-control-sm" [(ngModel)]="accessory.manufacturer"
+                            required maxlength="50" />
+                        <span *ngIf="errors.manufacturer" class="text-danger">{{errors.manufacturer}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="accessory_info">Information</label>
+                        <input id="accessory_info" name="info" class="form-control form-control-sm" [(ngModel)]="accessory.info"
+                            required maxlength="50" />
+                        <span *ngIf="errors.info" class="text-danger">{{errors.info}}</span>
+                    </div>
+                    <div class="col-12">
+                        <a class="btn btn-sm btn-secondary" (click)="util.goBack('/accessory', $event)"
+                            routerLink="/accessory">Cancel</a>
+                        <button class="btn btn-sm btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
