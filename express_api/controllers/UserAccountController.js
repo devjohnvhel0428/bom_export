@@ -51,7 +51,7 @@ exports.create = (req, res, next) => {
   userAccount.password_reset_token = token
   userAccount.password = bcrypt.hashSync(Math.random().toString(36).substring(2), 10)
   if (userAccount.active === undefined) {
-    userAccount.active = false
+    userAccount.active = 1
   }
   UserAccount.create(userAccount).then(async (data) => {
   await (async() => {

@@ -25,13 +25,28 @@
                         <span *ngIf="errors.designators" class="text-danger">{{errors.designators}}</span>
                     </div>
                     <div class="form-group col-md-6 col-lg-4">
-                        <label for="order_detail_accessory_id">Accessory(Manufacturer)</label>
-                        <select id="order_detail_accessory_id" name="accessory_id" class="form-control form-control-sm"
-                            [(ngModel)]="orderDetail.accessory_id" required>
-                            <option *ngFor="let accessory of accessories" value="{{accessory.id}}"
-                                [selected]="orderDetail.accessory_id == accessory.id">{{accessory.footprint}}({{accessory.manufacturer}})</option>
-                        </select>
-                        <span *ngIf="errors.accessory_id" class="text-danger">{{errors.accessory_id}}</span>
+                        <label for="order_detail_footprint">Footprint</label>
+                        <input id="order_detail_footprint" name="footprint" class="form-control form-control-sm"
+                            [(ngModel)]="orderDetail.footprint" required />
+                        <span *ngIf="errors.footprint" class="text-danger">{{errors.footprint}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_manufacturer">Manufacturer</label>
+                        <input id="order_detail_manufacturer" name="manufacturer" class="form-control form-control-sm"
+                            [(ngModel)]="orderDetail.manufacturer" required />
+                        <span *ngIf="errors.manufacturer" class="text-danger">{{errors.manufacturer}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_data">Data</label>
+                        <input id="order_detail_data" name="data" class="form-control form-control-sm"
+                            [(ngModel)]="orderDetail.data" required />
+                        <span *ngIf="errors.data" class="text-danger">{{errors.data}}</span>
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_value">Value</label>
+                        <input id="order_detail_value" name="value" class="form-control form-control-sm"
+                            [(ngModel)]="orderDetail.value" required />
+                        <span *ngIf="errors.value" class="text-danger">{{errors.value}}</span>
                     </div>
                     <div class="form-group col-md-6 col-lg-4">
                         <label for="order_detail_qty">Qty</label>
