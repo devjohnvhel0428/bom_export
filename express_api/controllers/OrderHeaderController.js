@@ -88,20 +88,23 @@ exports.excel = async (req, res, next) => {
   let data = new Array()
   readXlsxFile(filePath).then((rows) => {
     // Loop through every row
-    for (let i = 1; i < rows.length; i++) {
+    for (let i = 6; i < rows.length; i++) {
       // Get the current row
       let row = rows[i]
+      // Stop processing if the 4th column is null
+      if (!row[3]) break;
       let newDetail = new Object()
-      newDetail.order_id = orderHeader.id
-      newDetail.part_number = row[0] ? row[0] : '-'
+      newDetail.designators = row[0] ? row[0] : '-'
       newDetail.qty = row[1] ? row[1] : '-'
       newDetail.value = row[2] ? row[2] : '-'
       newDetail.footprint = row[3] ? row[3] : '-'
       newDetail.data = row[4] ? row[4] : '-'
       newDetail.manufacturer = row[5] ? row[5] : '-'
-      newDetail.designators = '-'
+      newDetail.info = row[6] ? row[6] : '-'
+      newDetail.order_id = orderHeader.id
       data.push(newDetail)
     }
+
 
     fs.unlink(filePath, (err) => {
       if (err) {

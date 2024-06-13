@@ -1,2 +1,2 @@
-HOSTNAME=http://159.223.2.35
+HOSTNAME=http://localhost
 PORT=27017
