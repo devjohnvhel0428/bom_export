@@ -1,6 +1,6 @@
 module.exports = {
   app: {
-    url: 'http://localhost:4200',
+    url: 'http://159.223.2.35:4200',
     name: 'BomDB'
   },
   smtp: {

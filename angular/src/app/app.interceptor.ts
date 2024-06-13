@@ -13,7 +13,7 @@ import { Router } from '@angular/router'
 
 export class AppInterceptor implements HttpInterceptor {
 
-  baseURL = 'http://localhost:27017/api'
+  baseURL = 'http://159.223.2.35:27017/api'
   constructor(private router: Router) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
