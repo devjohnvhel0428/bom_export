@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div [ngClass]="{'col-md-12': !selectedProduct, 'col-md-5': selectedProduct}">
+        <div class="col-md-5">
             <table class="table table-sm table-striped table-hover">
                 <thead>
                     <tr>
@@ -11,8 +11,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let product of products; let i = index" style="cursor: pointer;"
-                        (click)="selectProduct(product, i)">
+                    <tr *ngFor="let product of products; let i = index" style="cursor: pointer;">
                         <td class="text-center">{{product.id}}</td>
                         <td class="d-none d-md-table-cell text-center"><a *ngIf="product.image"
                                 href="http://159.223.2.35:27017/uploads/products/{{product.image}}" target="_blank"
@@ -20,9 +19,10 @@
                                     src="http://159.223.2.35:27017/uploads/products/{{product.image}}" /></a></td>
                         <td>{{product.name}}</td>
                         <td style="text-align: center;">
-                            <span *ngIf="selectedProduct?.id!=product.id">{{product.qty}}</span>
-                            <input type="number" min="1" class="text-center" *ngIf="selectedProduct?.id==product.id"
-                                value="{{product.qty}}" style="width: 50px;" (change)="changeQty(i, $event)" />
+                            <!-- <span *ngIf="selectedProduct?.id!=product.id">{{product.qty}}</span> -->
+                            <input type="number" min="1" class="text-center" value="{{product.qty}}"
+                                (focus)="selectProduct(product, i)" style="width: 50px;" (input)="changeQty(i, $event)" (change)="changeQty(i, $event)"
+                                (blur)="cancelDetail()" />
                         </td>
                     </tr>
                 </tbody>
@@ -34,7 +34,7 @@
                 Export
             </button>
         </div>
-        <div *ngIf="selectedProduct" class="col-md-7 border-left">
+        <div class="col-md-7 border-left">
             <table class="table table-sm table-striped table-hover">
                 <thead>
                     <tr>
@@ -69,8 +69,6 @@
                     </tr>
                 </tbody>
             </table>
-            <button type="button" class="btn btn-sm btn-dark" (click)="cancelDetail()">Cancel</button>
-            <button type="button" class="btn btn-sm btn-success" (click)="confirmDetail()">Confirm</button>
         </div>
     </div>
 </div>

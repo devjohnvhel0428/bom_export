@@ -47,26 +47,36 @@ exports.create = (req, res, next) => {
 
 exports.edit = (req, res, next) => {
   let sqlOrderDetail = knex('OrderDetail')
-    .select('OrderDetail.id', 'OrderDetail.order_id', 'OrderDetail.part_number', 'OrderDetail.designators', 'OrderDetail.accessory_id', 'OrderDetail.qty')
+    .leftJoin('Accessory', 'OrderDetail.accessory_id', 'Accessory.id')
+    .select(
+      'OrderDetail.id',
+      'OrderDetail.order_id',
+      'OrderDetail.part_number',
+      'OrderDetail.designators',
+      'Accessory.footprint as footprint',
+      'Accessory.manufacturer as manufacturer',
+      'Accessory.data as data',
+      'Accessory.info as info',
+      'Accessory.value as value',
+      'OrderDetail.accessory_id',
+      'OrderDetail.qty'
+    )
     .where('OrderDetail.id', req.params.id)
     .toString()
-  let sqlAccessory = knex('Accessory')
-    .select('Accessory.id', 'Accessory.footprint', 'Accessory.value', 'Accessory.data', 'Accessory.manufacturer', 'Accessory.info')
-    .toString()
   Promise.all([
-    db.query(sqlOrderDetail, { type: 'SELECT', plain: true }),
-    db.query(sqlAccessory, { type: 'SELECT' })
-  ]).then(([orderDetail, accessories]) => {
-    console.log('ommra->', orderDetail)
-    res.send({ orderDetail, accessories })
+    db.query(sqlOrderDetail, { type: 'SELECT', plain: true })
+  ]).then(([orderDetail]) => {
+    res.send({ orderDetail })
   }).catch(next)
 }
 
 exports.update = (req, res, next) => {
   let orderDetail = util.parseData(OrderDetail, { ...req.body })
-  console.log('marg->', orderDetail)
-  OrderDetail.update(orderDetail, { where: { id: req.params.id } }).then(() => {
-    res.end()
+  delete orderDetail.id
+  Accessory.update(orderDetail, { where: { id: orderDetail.accessory_id} }).then(() => {
+    OrderDetail.update(orderDetail, { where: { id: req.params.id } }).then(() => {
+      res.end()
+    }).catch(next)
   }).catch(next)
 }
 

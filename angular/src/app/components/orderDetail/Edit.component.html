@@ -11,8 +11,9 @@
                     </div>
                     <div class="form-group col-md-6 col-lg-4">
                         <label for="order_detail_order_id">BOM Id</label>
-                        <input readonly [(ngModel)]="orderDetail.order_id" id="order_detail_order_id" name="order_id" class="form-control form-control-sm"
-                            value="{{orderDetail.order_id}}" type="number" required />
+                        <input readonly [(ngModel)]="orderDetail.order_id" id="order_detail_order_id" name="order_id"
+                            class="form-control form-control-sm" value="{{orderDetail.order_id}}" type="number"
+                            required />
                     </div>
                     <div class="form-group col-md-6 col-lg-4">
                         <label for="order_detail_part_number">Part NO</label>
@@ -21,22 +22,38 @@
                     </div>
                     <div class="form-group col-md-6 col-lg-4">
                         <label for="order_detail_designators ">Designators</label>
-                        <input [(ngModel)]="orderDetail.designators" id="order_detail_designators" name="designators" class="form-control form-control-sm"
-                            value="{{orderDetail.designators}}" required />
+                        <input [(ngModel)]="orderDetail.designators" id="order_detail_designators" name="designators"
+                            class="form-control form-control-sm" value="{{orderDetail.designators}}" required />
                     </div>
                     <div class="form-group col-md-6 col-lg-4">
-                        <label for="order_detail_accessory_id">Accessory(Manufacturer)</label>
-                        <select id="order_detail_accessory_id" name="accessory_id" class="form-control form-control-sm"
-                            [(ngModel)]="orderDetail.accessory_id" required>
-                            <option *ngFor="let accessory of accessories" value="{{accessory.id}}"
-                                [selected]="orderDetail.accessory_id == accessory.id">{{accessory.footprint}}({{accessory.manufacturer}})</option>
-                        </select>
-                        <span *ngIf="errors.accessory_id" class="text-danger">{{errors.accessory_id}}</span>
+                        <label for="order_detail_footprint ">FootPrint</label>
+                        <input [(ngModel)]="orderDetail.footprint" id="order_detail_footprint" name="footprint"
+                            class="form-control form-control-sm" value="{{orderDetail.footprint}}" required />
                     </div>
                     <div class="form-group col-md-6 col-lg-4">
                         <label for="order_detail_qty">Qty</label>
-                        <input [(ngModel)]="orderDetail.qty" id="order_detail_qty" name="qty" class="form-control form-control-sm"
-                            value="{{orderDetail.qty}}" type="number" required />
+                        <input [(ngModel)]="orderDetail.qty" id="order_detail_qty" name="qty"
+                            class="form-control form-control-sm" value="{{orderDetail.qty}}" type="number" required />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_value ">Value</label>
+                        <input [(ngModel)]="orderDetail.value" id="order_detail_value" name="value"
+                            class="form-control form-control-sm" value="{{orderDetail.value}}" required />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_data ">Data</label>
+                        <input [(ngModel)]="orderDetail.data" id="order_detail_data" name="data"
+                            class="form-control form-control-sm" value="{{orderDetail.data}}" required />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_manufacturer ">Manufacturer</label>
+                        <input [(ngModel)]="orderDetail.manufacturer" id="order_detail_manufacturer" name="manufacturer"
+                            class="form-control form-control-sm" value="{{orderDetail.manufacturer}}" required />
+                    </div>
+                    <div class="form-group col-md-6 col-lg-4">
+                        <label for="order_detail_info ">Information</label>
+                        <input [(ngModel)]="orderDetail.info" id="order_detail_info" name="info"
+                            class="form-control form-control-sm" value="{{orderDetail.info}}" required />
                     </div>
                     <div class="col-12">
                         <a class="btn btn-sm btn-secondary" (click)="util.goBack('/bomDetail', $event)"

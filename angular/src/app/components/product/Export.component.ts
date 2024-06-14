@@ -114,6 +114,9 @@ export class ExportProduct {
             this.selectedDetail[index].qty = item.qty
         })
         this.selectedProduct.qty = count
+        this.exportData[this.selected] = JSON.parse(JSON.stringify(this.selectedDetail))
+        // this.products[this.selected] = JSON.parse(JSON.stringify(this.selectedProduct))
+        // this.cancelDetail()
     }
 
     cancelDetail() {
@@ -125,8 +128,7 @@ export class ExportProduct {
     }
 
     confirmDetail() {
-        this.exportData[this.selected] = JSON.parse(JSON.stringify(this.selectedDetail))
-        this.products[this.selected] = JSON.parse(JSON.stringify(this.selectedProduct))
+        
         this.selectedDetail = []
         this.selectedProduct = null
         this.selected = 0
