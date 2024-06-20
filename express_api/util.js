@@ -35,7 +35,7 @@ module.exports = {
       body = body.replace('{user}', user)
     }
     let subject = (type == 'welcome' ? 'Login Information' : (type == 'reset' ? 'Reset Password' : config.app.name + ' message'))
-    /* You need to complete the SMTP Server configuration before you can sent mail
+    //You need to complete the SMTP Server configuration before you can sent mail
     let transport = nodemailer.createTransport({
       host: config.smtp.host,
       port: config.smtp.port,
@@ -55,7 +55,6 @@ module.exports = {
       text: body
     }
     return await transport.sendMail(options)
-    */
   },
   getError(error) {
     if (error.constructor.name == 'ValidationError') {

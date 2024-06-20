@@ -15,7 +15,7 @@ exports.getCreate = (req, res, next) => {
 
 exports.create = (req, res, next) => {
   let orderDetail = util.parseData(OrderDetail, { ...req.body })
-  Accessory.findOne({ where: { footprint: orderDetail.footprint, value: orderDetail.value } })
+  Accessory.findOne({ where: { value: orderDetail.value } })
     .then(accessory => {
       if (!accessory) {
         orderDetail.create_user = req.user.id
@@ -27,9 +27,6 @@ exports.create = (req, res, next) => {
       } else {
         orderDetail.create_user = req.user.id
         orderDetail.create_date = Date.now()
-        if (accessory.manufacturer != orderDetail.manufacturer) {
-          Accessory.create(orderDetail).then()
-        }
         OrderDetail.findOne({ where: { accessory_id: accessory.id, order_id: orderDetail.order_id } })
           .then(existDetail => {
             if (!existDetail.isNewRecord) {
@@ -71,14 +68,30 @@ exports.edit = (req, res, next) => {
 }
 
 exports.update = (req, res, next) => {
-  let orderDetail = util.parseData(OrderDetail, { ...req.body })
-  delete orderDetail.id
-  Accessory.update(orderDetail, { where: { id: orderDetail.accessory_id} }).then(() => {
-    OrderDetail.update(orderDetail, { where: { id: req.params.id } }).then(() => {
-      res.end()
-    }).catch(next)
-  }).catch(next)
-}
+  let orderDetail = util.parseData(OrderDetail, { ...req.body });
+  delete orderDetail.id;
+
+  // Check if the new value already exists in the Accessory table
+  Accessory.findOne({ where: { value: orderDetail.value } })
+    .then((existingAccessory) => {
+      if (existingAccessory && existingAccessory.id !== orderDetail.accessory_id) {
+        // Value already exists, send an error message
+        return res.status(400).json({ error: 'Value already exists in the Accessory table' });
+      }
+
+      // Value doesn't exist, proceed with the update
+      Accessory.update(orderDetail, { where: { id: orderDetail.accessory_id } })
+        .then(() => {
+          OrderDetail.update(orderDetail, { where: { id: req.params.id } })
+            .then(() => {
+              res.end();
+            })
+            .catch(next);
+        })
+        .catch(next);
+    })
+    .catch(next);
+};
 
 exports.getDelete = (req, res, next) => {
   let sqlOrderDetail = knex('OrderDetail')

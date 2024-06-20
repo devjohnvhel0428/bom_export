@@ -40,13 +40,28 @@ exports.getCreate = (req, res, next) => {
 }
 
 exports.create = (req, res, next) => {
-  let accessory = util.parseData(Accessory, { ...req.body })
-  accessory.create_user = req.user.id
-  accessory.create_date = Date.now()
-  Accessory.create(accessory).then(() => {
-    res.end()
-  }).catch(next)
-}
+  let accessory = util.parseData(Accessory, { ...req.body });
+  accessory.create_user = req.user.id;
+  accessory.create_date = Date.now();
+
+  // Check if an accessory with the same field values already exists
+  Accessory.findOne({ where: { value: accessory.value }})
+    .then(existingAccessory => {
+      if (existingAccessory) {
+        // If an accessory with the same field values exists, return an error
+        res.status(400).send('An accessory with the same field values already exists.');
+      } else {
+        // If no such accessory exists, create a new one
+        Accessory.create(accessory)
+          .then(() => {
+            res.end();
+          })
+          .catch(next);
+      }
+    })
+    .catch(next);
+};
+
 
 exports.get = (req, res, next) => {
   let sqlAccessory = knex('Accessory')

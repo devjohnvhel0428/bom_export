@@ -115,7 +115,7 @@ exports.excel = async (req, res, next) => {
     });
 
     let promises = data.map(orderDetail => {
-      return Accessory.findOne({ where: { footprint: orderDetail.footprint, value: orderDetail.value } })
+      return Accessory.findOne({ where: { value: orderDetail.value } })
         .then(accessory => {
           if (!accessory) {
             // If the footprint doesn't exist in the Accessory table, create a new Accessory
@@ -266,7 +266,7 @@ exports.export = async (req, res, next) => {
 
   total_data.forEach(function (item) {
     var existing = result.find(function (r) {
-      return r.footprint === item.footprint && r.value === item.value;
+      return r.value === item.value;
     })
 
     if (existing) {
