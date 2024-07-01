@@ -88,7 +88,7 @@ exports.excel = async (req, res, next) => {
   let data = new Array()
   readXlsxFile(filePath).then((rows) => {
     // Loop through every row
-    for (let i = 6; i < rows.length; i++) {
+    for (let i = 7; i < rows.length; i++) {
       // Get the current row
       let row = rows[i]
       // Stop processing if the 4th column is null
@@ -100,7 +100,7 @@ exports.excel = async (req, res, next) => {
       newDetail.footprint = row[3] ? row[3] : '-'
       newDetail.data = row[4] ? row[4] : '-'
       newDetail.manufacturer = row[5] ? row[5] : '-'
-      newDetail.info = row[6] ? row[6] : '-'
+      newDetail.database_reference = row[6] ? row[6] : '-'
       newDetail.order_id = orderHeader.id
       data.push(newDetail)
     }
@@ -115,7 +115,7 @@ exports.excel = async (req, res, next) => {
     });
 
     let promises = data.map(orderDetail => {
-      return Accessory.findOne({ where: { value: orderDetail.value } })
+      return Accessory.findOne({ where: { database_reference: orderDetail.database_reference } })
         .then(accessory => {
           if (!accessory) {
             // If the footprint doesn't exist in the Accessory table, create a new Accessory
@@ -161,7 +161,7 @@ exports.get = (req, res, next) => {
   let sqlOrderHeaderOrderDetail = knex('OrderHeader')
     .join('OrderDetail', 'OrderHeader.id', 'OrderDetail.order_id')
     .join('Accessory', 'OrderDetail.accessory_id', 'Accessory.id')
-    .select('OrderDetail.id', 'OrderDetail.part_number', 'OrderDetail.order_id', 'OrderDetail.designators', 'OrderDetail.accessory_id', 'OrderDetail.qty', 'Accessory.footprint as footprint', 'Accessory.value as value', 'Accessory.data as data', 'Accessory.info as info')
+    .select('OrderDetail.id', 'OrderDetail.part_number', 'OrderDetail.order_id', 'OrderDetail.designators', 'OrderDetail.accessory_id', 'OrderDetail.qty', 'Accessory.footprint as footprint', 'Accessory.value as value', 'Accessory.data as data', 'Accessory.database_reference as database_reference')
     .where('OrderHeader.id', req.params.id)
     .toString()
   Promise.all([
@@ -181,7 +181,7 @@ exports.getFromProduct = (req, res, next) => {
   let sqlOrderHeaderOrderDetail = knex('OrderHeader')
     .join('OrderDetail', 'OrderHeader.id', 'OrderDetail.order_id')
     .join('Accessory', 'OrderDetail.accessory_id', 'Accessory.id')
-    .select('OrderDetail.id', 'OrderDetail.order_id', 'OrderDetail.designators', 'OrderDetail.accessory_id', 'OrderDetail.qty', 'Accessory.footprint as footprint', 'Accessory.manufacturer as manufacturer', 'Accessory.value as value', 'Accessory.data as data', 'Accessory.info as info')
+    .select('OrderDetail.id', 'OrderDetail.order_id', 'OrderDetail.designators', 'OrderDetail.accessory_id', 'OrderDetail.qty', 'Accessory.footprint as footprint', 'Accessory.manufacturer as manufacturer', 'Accessory.value as value', 'Accessory.data as data', 'Accessory.database_reference as database_reference')
     .where('OrderHeader.product_id', req.params.id)
     .toString()
   Promise.all([
@@ -201,7 +201,7 @@ exports.edit = (req, res, next) => {
   let sqlOrderHeaderOrderDetail = knex('OrderHeader')
     .join('OrderDetail', 'OrderHeader.id', 'OrderDetail.order_id')
     .join('Accessory', 'OrderDetail.accessory_id', 'Accessory.id')
-    .select('OrderDetail.id', 'OrderDetail.designators', 'OrderDetail.part_number', 'Accessory.footprint as footprint', 'OrderDetail.qty', 'OrderDetail.order_id', 'Accessory.data as data', 'Accessory.value as value', 'Accessory.manufacturer as manufacturer', 'Accessory.info as info')
+    .select('OrderDetail.id', 'OrderDetail.designators', 'OrderDetail.part_number', 'Accessory.footprint as footprint', 'OrderDetail.qty', 'OrderDetail.order_id', 'Accessory.data as data', 'Accessory.value as value', 'Accessory.manufacturer as manufacturer', 'Accessory.database_reference as database_reference')
     .where('OrderHeader.id', req.params.id)
     .toString()
   let sqlProduct = knex('Product')
@@ -232,7 +232,7 @@ exports.getDelete = (req, res, next) => {
   let sqlOrderHeaderOrderDetail = knex('OrderHeader')
     .join('OrderDetail', 'OrderHeader.id', 'OrderDetail.order_id')
     .join('Accessory', 'OrderDetail.accessory_id', 'Accessory.id')
-    .select('OrderDetail.id', 'OrderDetail.order_id', 'OrderDetail.part_number', 'OrderDetail.designators', 'OrderDetail.accessory_id', 'OrderDetail.qty', 'Accessory.footprint as footprint', 'Accessory.value as value', 'Accessory.data as data', 'Accessory.info as info')
+    .select('OrderDetail.id', 'OrderDetail.order_id', 'OrderDetail.part_number', 'OrderDetail.designators', 'OrderDetail.accessory_id', 'OrderDetail.qty', 'Accessory.footprint as footprint', 'Accessory.value as value', 'Accessory.data as data', 'Accessory.database_reference as database_reference')
     .where('OrderHeader.id', req.params.id)
     .toString()
   Promise.all([
@@ -257,7 +257,7 @@ exports.export = async (req, res, next) => {
   // Combine objects with the same footprint and value
   let result = []
   let total_data = []
-  
+  console.log("data->", data)
   data?.forEach(item => {
     item?.forEach(one_data => {
       total_data?.push(one_data)
@@ -266,7 +266,7 @@ exports.export = async (req, res, next) => {
 
   total_data.forEach(function (item) {
     var existing = result.find(function (r) {
-      return r.value === item.value;
+      return r.database_reference === item.database_reference;
     })
 
     if (existing) {
@@ -282,7 +282,7 @@ exports.export = async (req, res, next) => {
         manufacturer: item.manufacturer,
         value: item.value,
         data: item.data,
-        info: item.info
+        database_reference: item.database_reference
       })
     }
   })
@@ -298,7 +298,7 @@ exports.export = async (req, res, next) => {
     { header: 'Value', key: 'value', width: 30 },
     { header: 'Data', key: 'data', width: 40 },
     { header: 'Manufacturer', key: 'manufacturer', width: 30 },
-    { header: 'Info', key: 'info', width: 40 },
+    { header: 'Database Reference', key: 'database_reference', width: 40 },
   ];
 
   // Add rows to the worksheet

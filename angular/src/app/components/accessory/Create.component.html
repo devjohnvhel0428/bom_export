@@ -29,10 +29,10 @@
                         <span *ngIf="errors.manufacturer" class="text-danger">{{errors.manufacturer}}</span>
                     </div>
                     <div class="form-group col-md-6 col-lg-4">
-                        <label for="accessory_info">Information</label>
-                        <input id="accessory_info" name="info" class="form-control form-control-sm" [(ngModel)]="accessory.info"
+                        <label for="accessory_database_reference">Database Reference</label>
+                        <input id="accessory_database_reference" name="database_reference" class="form-control form-control-sm" [(ngModel)]="accessory.database_reference"
                             required maxlength="50" />
-                        <span *ngIf="errors.info" class="text-danger">{{errors.info}}</span>
+                        <span *ngIf="errors.database_reference" class="text-danger">{{errors.database_reference}}</span>
                     </div>
                     <div class="col-12">
                         <a class="btn btn-sm btn-secondary" (click)="util.goBack('/accessory', $event)"

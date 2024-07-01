@@ -88,6 +88,7 @@ export class ExportProduct {
     }
 
     selectProduct(product: any, index: number) {
+        this.cancelDetail()
         if (!this.selectedProduct) {
             this.selectedProduct = JSON.parse(JSON.stringify(product))
             this.selected = index

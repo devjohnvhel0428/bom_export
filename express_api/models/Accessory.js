@@ -14,7 +14,7 @@ module.exports = db.define('Accessory', {
   data: Sequelize.STRING,
   value: Sequelize.STRING,
   manufacturer: Sequelize.STRING,
-  info: Sequelize.STRING,
+  database_reference: Sequelize.STRING,
   create_user: Sequelize.INTEGER,
   create_date: Sequelize.DATE
 })

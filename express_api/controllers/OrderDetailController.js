@@ -15,7 +15,7 @@ exports.getCreate = (req, res, next) => {
 
 exports.create = (req, res, next) => {
   let orderDetail = util.parseData(OrderDetail, { ...req.body })
-  Accessory.findOne({ where: { value: orderDetail.value } })
+  Accessory.findOne({ where: { database_reference: orderDetail.database_reference } })
     .then(accessory => {
       if (!accessory) {
         orderDetail.create_user = req.user.id
@@ -30,7 +30,7 @@ exports.create = (req, res, next) => {
         OrderDetail.findOne({ where: { accessory_id: accessory.id, order_id: orderDetail.order_id } })
           .then(existDetail => {
             if (!existDetail.isNewRecord) {
-              OrderDetail.create({ ...orderDetail, accessory_id: accessory.dataValues.id }).then()
+              OrderDetail.create({ ...orderDetail, accessory_id: accessory.id }).then()
             }
           })
       }
@@ -53,7 +53,7 @@ exports.edit = (req, res, next) => {
       'Accessory.footprint as footprint',
       'Accessory.manufacturer as manufacturer',
       'Accessory.data as data',
-      'Accessory.info as info',
+      'Accessory.database_reference as database_reference',
       'Accessory.value as value',
       'OrderDetail.accessory_id',
       'OrderDetail.qty'
@@ -72,11 +72,11 @@ exports.update = (req, res, next) => {
   delete orderDetail.id;
 
   // Check if the new value already exists in the Accessory table
-  Accessory.findOne({ where: { value: orderDetail.value } })
+  Accessory.findOne({ where: { database_reference: orderDetail.database_reference } })
     .then((existingAccessory) => {
       if (existingAccessory && existingAccessory.id !== orderDetail.accessory_id) {
         // Value already exists, send an error message
-        return res.status(400).json({ error: 'Value already exists in the Accessory table' });
+        return res.status(400).json({ error: 'Database Reference already exists in the Accessory table' });
       }
 
       // Value doesn't exist, proceed with the update

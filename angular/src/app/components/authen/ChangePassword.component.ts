@@ -29,6 +29,7 @@ import { Util } from '../../util.service'
                       </div>
                       <div class="col-12">
                         <button class="btn btn-sm btn-secondary btn-block">Change Password</button>
+                        <a href="/login" class="text-danger">Cancel</a>
                       </div>
                     </div>
                   </form>

@@ -22,7 +22,7 @@
                             <!-- <span *ngIf="selectedProduct?.id!=product.id">{{product.qty}}</span> -->
                             <input type="number" min="1" class="text-center" value="{{product.qty}}"
                                 (focus)="selectProduct(product, i)" style="width: 50px;" (input)="changeQty(i, $event)" (change)="changeQty(i, $event)"
-                                (blur)="cancelDetail()" />
+                                 />
                         </td>
                     </tr>
                 </tbody>
@@ -45,7 +45,7 @@
                         <th>Footprint</th>
                         <th>Data</th>
                         <th>Manufacturer</th>
-                        <th>Information</th>
+                        <th>Database Reference</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,7 +65,7 @@
                                     [selected]="item.id == detail.accessory_id">{{item.manufacturer}}</option>
                             </select>
                         </td>
-                        <td>{{detail.info}}</td>
+                        <td>{{detail.database_reference}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -23,6 +23,7 @@ import { HttpClient } from '@angular/common/http'
                       </div>
                       <div class="col-12">
                         <button class="btn btn-sm btn-secondary btn-block">Reset Password</button>
+                        <a href="/login" class="text-danger">Cancel</a>
                       </div>
                     </div>
                   </form>

@@ -10,7 +10,7 @@ exports.index = (req, res, next) => {
   let column = req.query.sc
   let query = knex('Accessory')
     .leftJoin('UserAccount', 'Accessory.create_user', 'UserAccount.id')
-    .select('Accessory.id', 'Accessory.footprint', 'Accessory.value', 'Accessory.create_date', 'Accessory.data', 'Accessory.manufacturer', 'Accessory.info', 'UserAccount.name as user_account_name')
+    .select('Accessory.id', 'Accessory.footprint', 'Accessory.value', 'Accessory.create_date', 'Accessory.data', 'Accessory.manufacturer', 'Accessory.database_reference', 'UserAccount.name as user_account_name')
     .orderBy(sort, sortDirection)
   let columns = query._statements.find(e => e.grouping == 'columns').value
   if (util.isInvalidSearch(columns, column)) {
@@ -45,7 +45,7 @@ exports.create = (req, res, next) => {
   accessory.create_date = Date.now();
 
   // Check if an accessory with the same field values already exists
-  Accessory.findOne({ where: { value: accessory.value }})
+  Accessory.findOne({ where: { database_reference: accessory.database_reference }})
     .then(existingAccessory => {
       if (existingAccessory) {
         // If an accessory with the same field values exists, return an error
@@ -66,7 +66,7 @@ exports.create = (req, res, next) => {
 exports.get = (req, res, next) => {
   let sqlAccessory = knex('Accessory')
     .leftJoin('UserAccount', 'Accessory.create_user', 'UserAccount.id')
-    .select('Accessory.id', 'Accessory.footprint', 'Accessory.value', 'Accessory.data', 'Accessory.info', 'Accessory.manufacturer', 'Accessory.create_date', 'UserAccount.name as user_account_name')
+    .select('Accessory.id', 'Accessory.footprint', 'Accessory.value', 'Accessory.data', 'Accessory.database_reference', 'Accessory.manufacturer', 'Accessory.create_date', 'UserAccount.name as user_account_name')
     .where('Accessory.id', req.params.id)
     .toString()
   Promise.all([
@@ -79,7 +79,7 @@ exports.get = (req, res, next) => {
 exports.getSimilar = (req, res, next) => {
   let sqlAccessory = knex('Accessory')
     .leftJoin('UserAccount', 'Accessory.create_user', 'UserAccount.id')
-    .select('Accessory.id', 'Accessory.footprint', 'Accessory.value', 'Accessory.data', 'Accessory.info', 'Accessory.manufacturer', 'Accessory.create_date', 'UserAccount.name as user_account_name')
+    .select('Accessory.id', 'Accessory.footprint', 'Accessory.value', 'Accessory.data', 'Accessory.database_reference', 'Accessory.manufacturer', 'Accessory.create_date', 'UserAccount.name as user_account_name')
     .where('Accessory.footprint', req.params.name)
     .where('Accessory.value', req.params.value)
     .toString()
@@ -90,7 +90,7 @@ exports.getSimilar = (req, res, next) => {
 
 exports.edit = (req, res, next) => {
   let sqlAccessory = knex('Accessory')
-    .select('Accessory.id', 'Accessory.footprint', 'Accessory.value', 'Accessory.data', 'Accessory.manufacturer', 'Accessory.info')
+    .select('Accessory.id', 'Accessory.footprint', 'Accessory.value', 'Accessory.data', 'Accessory.manufacturer', 'Accessory.database_reference')
     .where('Accessory.id', req.params.id)
     .toString()
   Promise.all([
@@ -110,7 +110,7 @@ exports.update = (req, res, next) => {
 exports.getDelete = (req, res, next) => {
   let sqlAccessory = knex('Accessory')
     .leftJoin('UserAccount', 'Accessory.create_user', 'UserAccount.id')
-    .select('Accessory.id', 'Accessory.footprint', 'Accessory.value', 'Accessory.data', 'Accessory.info', 'Accessory.manufacturer', 'Accessory.create_date', 'UserAccount.name as user_account_name')
+    .select('Accessory.id', 'Accessory.footprint', 'Accessory.value', 'Accessory.data', 'Accessory.database_reference', 'Accessory.manufacturer', 'Accessory.create_date', 'UserAccount.name as user_account_name')
     .where('Accessory.id', req.params.id)
     .toString()
   Promise.all([

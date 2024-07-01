@@ -11,7 +11,7 @@
                             <option value="Accessory.value">Value</option>
                             <option value="Accessory.data">Data</option>
                             <option value="Accessory.manufacturer">Manufacturer</option>
-                            <option value="Accessory.info">Infomation</option>
+                            <option value="Accessory.database_reference">Database Reference</option>
                         </select>
                     </div>
                     <div class="form-group col-lg-2">
@@ -47,8 +47,8 @@
                             <th class="{{util.getSortClass('Accessory.manufacturer')}}"><a (click)="util.goto($event)"
                                     href="{{util.getLink(this.paging,'sort','Accessory.manufacturer')}}">Manufacturer</a>
                             </th>
-                            <th class="{{util.getSortClass('Accessory.info')}}"><a (click)="util.goto($event)"
-                                    href="{{util.getLink(this.paging,'sort','Accessory.info')}}">Info</a></th>
+                            <th class="{{util.getSortClass('Accessory.database_reference')}}"><a (click)="util.goto($event)"
+                                    href="{{util.getLink(this.paging,'sort','Accessory.database_reference')}}">Database Reference</a></th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -59,7 +59,7 @@
                             <td>{{accessory.value}}</td>
                             <td>{{accessory.data}}</td>
                             <td>{{accessory.manufacturer}}</td>
-                            <td>{{accessory.info}}</td>
+                            <td>{{accessory.database_reference}}</td>
                             <td class="text-center">
                                 <a class="btn btn-sm btn-secondary" routerLink="/accessory/{{accessory.id}}"
                                     title="View"><i class="fa fa-eye"></i></a>
