@@ -67,7 +67,7 @@ exports.create = (req, res, next) => {
         )
       }
     })()
-    await util.sentMail('welcome', userAccount.email, token, userAccount.name)
+    // await util.sentMail('welcome', userAccount.email, token, userAccount.name)
     res.end()
   }).catch(next)
 }
